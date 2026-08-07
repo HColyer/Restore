@@ -4,6 +4,8 @@ import Button from "./Button";
 import { ShoppingCart } from "lucide-react";
 import { Heart } from "lucide-react";
 import { Link } from "react-router";
+import CountBadge from "./CountBadge";
+import useBasket from "../../hooks/useBasketContext.ts";
 
 type NavBarProps = {
     imageSrc: string,
@@ -12,6 +14,13 @@ type NavBarProps = {
 }
 
 export default function NavBar({ imageSrc, imageAlt, title }: NavBarProps) {
+    const { items } = useBasket();
+
+    const totalQuantity = items.reduce(
+        (total, item) => total + item.quantity,
+        0
+    );
+    
     return (
         <nav className="fixed w-screen py-2 px-10 flex justify-between items-center bg-zinc-100 dark:bg-zinc-900">
             <Link to="/" className="flex items-center">
@@ -20,9 +29,10 @@ export default function NavBar({ imageSrc, imageAlt, title }: NavBarProps) {
 
             </Link>
             <div className="flex space-x-3">
-                <ul className="flex items-center space-x-3">
-                    <li>
-                        <IconLink href={"#"} icon={<ShoppingCart />} />
+                <ul className="flex items-center space-x-4 px-1">
+                    <li className={items.length > 0 ? "relative" : ""}>
+                        <IconLink href="/basket" icon={<ShoppingCart />} />
+                        {totalQuantity > 0 && <CountBadge max={99} productQuantity={totalQuantity} />}
                     </li>
                     <li>
                         <IconLink href={"#"} icon={<Heart />} />
