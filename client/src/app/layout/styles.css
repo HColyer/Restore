@@ -7,14 +7,59 @@
   body {
     @apply bg-zinc-200 dark:bg-zinc-950 text-slate-950 dark:text-zinc-200;
   }
-  h1, h2, h3, h4, h5, h6{
-     @apply text-lg ;
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply text-lg;
   }
-
 }
 
 body {
   font-family: "Rubik", sans-serif;
   font-optical-sizing: auto;
 }
+/* css style for loading component */
+.loader {
+  --color-1: theme(colors.zinc.900);
+  --color-2: theme(colors.orange.500);
+  --size: 1px;
 
+  width: calc(48 * var(--size));
+  height: calc(48 * var(--size));
+  border: calc(3 * var(--size)) solid var(--color-1);
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+.loader::after {
+  content: "";
+  box-sizing: border-box;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: var(--color-2);
+  width: calc(16 * var(--size));
+  height: calc(16 * var(--size));
+  transform: translate(-50%, 50%);
+  border-radius: 50%;
+}
+
+.dark .loader {
+  --color-1: theme(colors.zinc.100);
+  --color-2: theme(colors.purple.600);
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
