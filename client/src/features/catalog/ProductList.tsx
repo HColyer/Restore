@@ -7,10 +7,12 @@ type Props = {
 
 export default function ProductList({ products }: Props) {
     return (
-
-        <ul className="grid grid-cols-3 max-w-fit gap-8 grid-rows-3">
-            {products.map(product => <li key={product.id}><ProductItem product={product} /></li>)}
+        <ul className="grid grid-cols-3 max-w-fit gap-8 grid-rows-3 pt-30 mx-auto">
+            {products.map(product => (
+                <li key={product.id}>
+                    <ProductItem product={product} />
+                </li>
+            ))}
         </ul>
-
     )
 }

@@ -20,7 +20,7 @@ export default function ProductItem({ product }: Props) {
             h-full
             flex 
             flex-col
-            bg-white 
+            bg-zinc-100 
             dark:bg-zinc-900
             cursor-pointer
             ">
@@ -36,7 +36,6 @@ export default function ProductItem({ product }: Props) {
                         <Plus />
                     </ Button>
                 </div>
-
             </section>
         </Link>
     )

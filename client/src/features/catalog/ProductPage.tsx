@@ -15,7 +15,6 @@ export default function ProductPage() {
             const data = await getProduct(id);
             setProduct(data);
         }
-
         loadProduct();
 
     }, [id])
@@ -44,7 +43,6 @@ export default function ProductPage() {
                         Description:<br />
                         {product.description}
                     </p>
-
                     <div className="flex p-3 justify-between items-center w-full">
                         <p className="pl-2">£{(product.price / 100).toFixed(2)}</p>
                         <Button>
@@ -52,9 +50,7 @@ export default function ProductPage() {
                         </ Button>
                     </div>
                 </div>
-
             </section>
-
         </main>
     )
 }

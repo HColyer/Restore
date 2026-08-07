@@ -3,8 +3,6 @@ import { useState, useEffect } from "react"
 import ProductList from "./ProductList"
 import { getProducts } from "../../services/CatalogServices"
 
-
-
 export default function Catalog() {
     const [products, setProducts] = useState<Product[]>([])
 
@@ -13,7 +11,6 @@ export default function Catalog() {
             const data = await getProducts()
             setProducts(data);
         }
-
         loadProducts()
     }, [])
 
