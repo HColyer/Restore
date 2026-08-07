@@ -1,0 +1,20 @@
+@import "tailwindcss";
+
+/* Apply all dark: utilities whenever the .dark class exists on the html element or any ancestor */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@layer base {
+  body {
+    @apply bg-zinc-200 dark:bg-zinc-950 text-slate-950 dark:text-zinc-200;
+  }
+  h1, h2, h3, h4, h5, h6{
+     @apply text-lg ;
+  }
+
+}
+
+body {
+  font-family: "Rubik", sans-serif;
+  font-optical-sizing: auto;
+}
+
