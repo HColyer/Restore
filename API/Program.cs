@@ -11,8 +11,14 @@ builder.Services.AddDbContext<StoreContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")
     );
 });
+builder.Services.AddCors();
 
 var app = builder.Build();
+
+app.UseCors(options =>
+{
+   options.WithOrigins("https://localhost:3000").AllowAnyHeader().AllowAnyMethod();
+});
 
 app.MapControllers();
 
