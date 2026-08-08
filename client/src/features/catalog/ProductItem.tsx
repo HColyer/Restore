@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import type { Product } from "../../app/models/Product";
 import Button from "../../components/ui/Button";
 import { Plus } from "lucide-react";
+import useBasket from "../../hooks/useBasketContext";
 
 type Props = {
     product: Product
@@ -9,10 +10,12 @@ type Props = {
 
 export default function ProductItem({ product }: Props) {
     const { id, pictureUrl, name, price } = product
+    const { addItem } = useBasket();
+
 
     return (
-        <Link to={`/product/${id}`}>
-            <section className="
+
+        <section className="
             rounded-md 
             shadow-md 
             overflow-hidden 
@@ -22,21 +25,24 @@ export default function ProductItem({ product }: Props) {
             flex-col
             bg-zinc-100 
             dark:bg-zinc-900
-            cursor-pointer
             ">
+            <Link className="flex-1" to={`/product/${id}`}>
                 <div className="aspect-square" >
                     <img className="w-full h-full object-cover" src={pictureUrl} alt={name} />
                 </div>
-                <div className="p-5 flex-1">
+                <div className="p-5">
                     <h3>{name}</h3>
                 </div>
-                <div className="flex p-3 justify-between items-center w-full">
-                    <p className="pl-2">£{(price / 100).toFixed(2)}</p>
-                    <Button onClick={(e) => (e.preventDefault())}>
-                        <Plus />
-                    </ Button>
-                </div>
-            </section>
-        </Link>
+            </Link>
+            <div className="flex p-3 justify-between items-center w-full">
+                <p className="pl-2">£{(price / 100).toFixed(2)}</p>
+                <Button onClick={(e) => {
+                    e.preventDefault()
+                    addItem(product)
+                }}>
+                    <Plus />
+                </ Button>
+            </div>
+        </section>
     )
 }
