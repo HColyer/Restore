@@ -1,25 +1,31 @@
 import type { Product } from "../../app/models/Product"
 import { useEffect, useState } from "react"
-import { useParams } from "react-router"
+import { useParams, useNavigate } from "react-router"
 import useBasket from "../../hooks/useBasketContext"
 import Button from "../../components/ui/Button"
 import LoadingSpinner from "../../components/ui/LoadingSpinner"
 import { getProduct } from "../../services/CatalogServices"
 import { Plus } from "lucide-react"
+import handleApiError from "../../api/handleApiError"
 
 export default function ProductPage() {
     const { id } = useParams();
+    const navigate = useNavigate();
     const [product, setProduct] = useState<Product | null>(null)
     const { addItem } = useBasket();
 
     useEffect(() => {
         async function loadProduct() {
-            const data = await getProduct(id);
-            setProduct(data);
+            try {
+                const data = await getProduct(id);
+                setProduct(data);
+            } catch (error) {
+                handleApiError(error, navigate)
+            }
         }
         loadProduct();
 
-    }, [id])
+    }, [navigate, id])
 
     if (!product) {
         return (
