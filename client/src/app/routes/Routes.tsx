@@ -3,6 +3,10 @@ import App from "../layout/App";
 import Catalog from "../../features/catalog/Catalog";
 import ProductPage from "../../features/catalog/ProductPage";
 import BasketPage from "../../features/basket/BasketPage";
+import NotFound from "../../errors/NotFound";
+import ServerError from "../../errors/ServerError";
+import BadRequest from "../../errors/BadRequest";
+
 
 export const router = createBrowserRouter([
     {
@@ -20,6 +24,18 @@ export const router = createBrowserRouter([
             {
                 path: "/basket",
                 element: <BasketPage />
+            },
+            {
+                path: "*",
+                element: <NotFound />
+            },
+            {
+                path:"/bad-request",
+                element: <BadRequest />
+            },
+            {
+                path: "/server-error",
+                element: <ServerError />
             }
         ]
     },
