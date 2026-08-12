@@ -14,9 +14,9 @@ type NavBarProps = {
 }
 
 export default function NavBar({ imageSrc, imageAlt, title }: NavBarProps) {
-    const { items } = useBasket();
+    const { basket } = useBasket();
 
-    const totalQuantity = items.reduce(
+    const totalQuantity = basket?.items.reduce(
         (total, item) => total + item.quantity,
         0
     );
@@ -30,7 +30,7 @@ export default function NavBar({ imageSrc, imageAlt, title }: NavBarProps) {
             </Link>
             <div className="flex space-x-3">
                 <ul className="flex items-center space-x-4 px-1">
-                    <li className={items.length > 0 ? "relative" : ""}>
+                    <li className={totalQuantity > 0 ? "relative" : ""}>
                         <IconLink href="/basket" icon={<ShoppingCart />} />
                         {totalQuantity > 0 && <CountBadge max={99} productQuantity={totalQuantity} />}
                     </li>

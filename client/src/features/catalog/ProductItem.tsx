@@ -10,7 +10,7 @@ type Props = {
 
 export default function ProductItem({ product }: Props) {
     const { id, pictureUrl, name, price } = product
-    const { addItem } = useBasket();
+    const { addItemToBasket } = useBasket();
 
 
     return (
@@ -38,7 +38,7 @@ export default function ProductItem({ product }: Props) {
                 <p className="pl-2">£{(price / 100).toFixed(2)}</p>
                 <Button onClick={(e) => {
                     e.preventDefault()
-                    addItem(product)
+                    addItemToBasket(id)
                 }}>
                     <Plus />
                 </ Button>

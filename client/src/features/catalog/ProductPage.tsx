@@ -12,7 +12,7 @@ export default function ProductPage() {
     const { id } = useParams();
     const navigate = useNavigate();
     const [product, setProduct] = useState<Product | null>(null)
-    const { addItem } = useBasket();
+    const { addItemToBasket } = useBasket();
 
     useEffect(() => {
         async function loadProduct() {
@@ -49,7 +49,7 @@ export default function ProductPage() {
                     </div>
                     <div className="bg-zinc-100 dark:bg-zinc-900 flex p-4 justify-between items-center w-full col-start-2 shadow-sm">
                         <p className="pl-2">£{(product.price / 100).toFixed(2)}</p>
-                        <Button onClick={() => addItem(product)}>
+                        <Button onClick={() => addItemToBasket(product.id)}>
                             <Plus />
                         </ Button>
                     </div>

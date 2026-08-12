@@ -1,20 +1,17 @@
-import { createContext, useReducer, type ReactNode } from "react";
-import { type Product } from "../../app/models/Product";
+import { createContext, useEffect, useReducer, type ReactNode } from "react";
 import { basketReducer } from "../reducers/BasketReducer";
-
-type BasketItem = {
-    product: Product,
-    quantity: number
-}
+import type { Basket } from "../../app/models/Basket";
 
 export type BasketState = {
-    items: BasketItem[]
+    basket: Basket | null,
 }
 
 type BasketContextValue = BasketState & {
-    addItem: (product: Product) => void,
-    deleteItem: (id: number) => void,
-    decreaseItem: (id: number) => void,
+    getBasket: () => Promise<void>,
+    addItemToBasket: (productId: number) => Promise<void>,
+    clearBasket: (productId: number, quantity: number) => Promise<void>,
+    // deleteItem: (id: number) => void,
+    // decreaseItem: (id: number) => void,
 }
 
 export const BasketContext = createContext<BasketContextValue | null>(null);
@@ -25,39 +22,64 @@ type Props = {
 
 export default function BasketProvider({ children }: Props) {
     const [state, dispatch] = useReducer(basketReducer, {
-        items: []
-    })
+        basket: null
+    });
 
-    const addItem = (product: Product) => {
-        dispatch({
-            type: "ADD",
-            payload: product
-        });
-    };
+    useEffect(() => {
+        getBasket();
+    }, []);
 
-    const deleteItem = (id: number) => {
-        dispatch({
-            type: "DELETE",
-            payload: id
-        });
-    };
-
-    const decreaseItem = (id: number) => {
-        dispatch({
-            type: "DECREASE",
-            payload: id
+    const getBasket = async () => {
+        // Talk to API
+        const response = await fetch("https://localhost:5001/api/basket", {
+            credentials: "include",
         })
-    }
+        // Get basket back
+        if(!response.ok) throw Error("Fail");
+        const basket: Basket = await response.json()
+        dispatch({
+            type: "SET_BASKET",
+            payload: basket
+        })
+        // Give basket to reducer
+    };
+
+    const addItemToBasket = async (productId: number) => {
+        // Talk to API
+        const response = await fetch(`https://localhost:5001/api/basket/?productId=${productId}&quantity=1`, {
+            method: "POST",
+            credentials: "include",
+        });
+        // Get updated basket back
+        if(!response.ok) throw Error("Failed to add item to basket");
+        const basket: Basket = await response.json();
+        dispatch({
+            type: "SET_BASKET",
+            payload: basket
+        });
+    };
+
+    const clearBasket = async (productId: number, quantity: number) => {
+        const response = await fetch(`https://localhost:5001/api/basket?productId=${productId}&quantity=${quantity}`, {
+            method: "DELETE",
+            credentials: "include",
+        });
+        if(!response.ok) throw Error("Failed to delete item")
+        dispatch({
+            type: "CLEAR_BASKET",
+        });
+        getBasket();
+    };    
 
     return (
         <BasketContext.Provider value={{
-            ...state,
-            addItem,
-            deleteItem,
-            decreaseItem
+            getBasket,
+            addItemToBasket,
+            clearBasket,
+            ...state
         }} >
             {children}
         </BasketContext.Provider>
-    )
+    );
 
 }
