@@ -12,8 +12,11 @@ export default function handleApiError(error: unknown, navigate: ReturnType<type
             case 500:
                 navigate("/server-error");
                 break;
+            
             default:
                 navigate("/server-error");
         }
     }
+    // Network error, CORS failure, backend offline, etc.
+    navigate("/server-error");
 }

@@ -1,4 +1,7 @@
 import { createBrowserRouter } from "react-router";
+import ThemeProvider from "../../store/providers/ThemeProvider";
+import ProductProvider from "../../store/providers/ProductProvider";
+import BasketProvider from "../../store/providers/BasketProvider";
 import App from "../layout/App";
 import Catalog from "../../features/catalog/Catalog";
 import ProductPage from "../../features/catalog/ProductPage";
@@ -11,7 +14,15 @@ import BadRequest from "../../errors/BadRequest";
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <App />,
+        element: (
+            <ThemeProvider>
+                <ProductProvider>
+                    <BasketProvider>
+                        <App />
+                    </BasketProvider>
+                </ProductProvider>
+            </ThemeProvider>
+        ),
         children: [
             {
                 index: true,
@@ -30,7 +41,7 @@ export const router = createBrowserRouter([
                 element: <NotFound />
             },
             {
-                path:"/bad-request",
+                path: "/bad-request",
                 element: <BadRequest />
             },
             {

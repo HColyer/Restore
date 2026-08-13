@@ -1,29 +1,23 @@
-import type { Product } from "../../app/models/Product"
-import { useState, useEffect } from "react"
 import ProductList from "./ProductList"
-import { getProducts } from "../../services/CatalogServices"
-import { useNavigate } from "react-router"
-import handleApiError from "../../api/handleApiError"
+import useProduct from "../../hooks/useProductContext"
+import LoadingSpinner from "../../components/ui/LoadingSpinner"
+import ProductFilters from "./ProductFilters" 
+import Pagination from "../../components/ui/Pagination"
 
-export default function Catalog() {
-    const [products, setProducts] = useState<Product[]>([])
-    const navigate = useNavigate();
+export default function CatalogPage() {
+    const { state, increasePage, decreasePage } = useProduct()
+    const totalPages = Math.ceil(state.totalCount / state.pageSize)
 
-    useEffect(() => {
-        async function loadProducts() {
-            try {
-                const data = await getProducts()
-                setProducts(data);
-            } catch (error) {
-                handleApiError(error, navigate)
-            }
-        }
-        loadProducts()
-    }, [navigate])
-
+    if (state.loading) return (
+        <div className="min-h-screen flex justify-center pt-40">
+            <LoadingSpinner />
+        </div>
+    )
     return (
         <>
-            <ProductList products={products} />
+            <ProductFilters />
+            <ProductList products={state.products} />
+            <Pagination onPrevious={decreasePage} onNext={increasePage} currentPage={state.pageNumber} totalPages={totalPages} />
         </>
     )
 }

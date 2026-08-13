@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    public class BasketController(StoreContext context) : BaseApiControler
+    public class BasketController(StoreContext context) : BaseApiController
     {
         [HttpGet]
         public async Task<ActionResult<BasketDTO>> GetBasket()
@@ -42,11 +42,12 @@ namespace API.Controllers
         {
             // get the basket
             Basket? basket = await RetrieveBasket();
-            if (basket == null) return NotFound();
+            if (basket == null) return BadRequest("Basket not found");
             // remove the item 
             basket.RemoveItem(productId, quantity);
             // save the changes
-            await context.SaveChangesAsync();
+            bool result = await context.SaveChangesAsync() > 0;
+            if (!result) return BadRequest("Failed to remove item from basket");
             return Ok();
         }
 
@@ -57,7 +58,7 @@ namespace API.Controllers
             .ThenInclude(p => p.Product)
             .FirstOrDefaultAsync(b => b.BasketId == Request.Cookies["basketId"]);
         }
-        
+
         private Basket CreateBasket()
         {
             string basketId = Guid.NewGuid().ToString();

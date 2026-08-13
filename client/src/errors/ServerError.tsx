@@ -1,3 +1,9 @@
+import ErrorContainer from "../components/ui/ErrorContainer"
+
 export default function ServerError() {
-    return <h1 className="pt-40">500 Sever Error</h1>
+
+    return (
+        <ErrorContainer title="Network Error" message="Server may be down or your internet could be down" />
+    )
+
 }
