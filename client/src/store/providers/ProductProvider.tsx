@@ -17,15 +17,27 @@ export type ProductState = {
     searchTerm: string;
     brands: string[];
     types: string[];
+    selectedBrands: string[];
+    selectedTypes: string[];
+}
+
+type ProductFilters = {
+    brands: string[],
+    types: string[]
 }
 
 type ProductContextValue = {
     state: ProductState;
     dispatch: Dispatch<ProductAction>;
-    fetchProducts: (pageNumber: number, pageSize: number) => Promise<void>;
+    setProducts: () => Promise<void>;
+    searchProducts: (searchTerm: string) => void;
+    fetchFilters: () => Promise<void>;
+    toggleFilter: (name: string, category: "brand"|"type") => void
+    clearFilters: () => void;
     increasePage: () => void;
     decreasePage: () => void;
-};
+    setOrderBy: (value: string) => void;
+}
 
 export const ProductContext = createContext<ProductContextValue | null>(null);
 
@@ -42,16 +54,30 @@ const initialState: ProductState = {
     orderBy: "name",
     searchTerm: "",
     brands: [],
-    types: []
+    types: [],
+    selectedBrands: [],
+    selectedTypes: []
 };
 
 export default function ProductProvider({ children }: Props) {
     const [state, dispatch] = useReducer(productReducer, initialState);
     const navigate = useNavigate();
+    useEffect(() => {
+        fetchFilters();
+    }, []);
 
     useEffect(() => {
-        fetchProducts(state.pageNumber, state.pageSize);
-    }, [state.pageNumber, state.pageSize]);
+        setProducts();
+    }, [
+        state.pageNumber,
+        state.pageSize,
+        state.searchTerm,
+        state.brands,
+        state.types,
+        state.selectedBrands,
+        state.selectedTypes,
+        state.orderBy
+    ]);
 
     function increasePage() {
         dispatch({
@@ -60,10 +86,32 @@ export default function ProductProvider({ children }: Props) {
         });
     }
 
-    async function fetchProducts(pageNumber: number, pageSize: number) {
+    async function setProducts() {
+        const { pageNumber, pageSize, searchTerm, selectedBrands, selectedTypes, orderBy } = state
+        const params = new URLSearchParams();
+
+        params.set("pageNumber", pageNumber.toString());
+        params.set("pageSize", pageSize.toString());
+
+        if (searchTerm) {
+            params.set("searchTerm", searchTerm);
+        }
+
+        if(orderBy) {
+            params.set("orderBy", orderBy)
+        }
+
+        selectedBrands.forEach(brand => {
+            params.append("brands", brand);
+        });
+
+        selectedTypes.forEach(type => {
+            params.append("types", type);
+        });
         dispatch({ type: "SET_LOADING", payload: true });
         try {
-            const response = await fetch(`https://localhost:5001/api/products?pageNumber=${pageNumber}&pageSize=${pageSize}`);
+            const response = await fetch(
+                `https://localhost:5001/api/products?${params.toString()}`);
             // api handler needs a response object to check the status code, 
             // so we throw the response if it's not ok
             if (!response.ok) throw response;
@@ -76,16 +124,92 @@ export default function ProductProvider({ children }: Props) {
         }
     }
 
+    function searchProducts(searchTerm: string) {
+        dispatch({
+            type: "SET_SEARCH_TERM",
+            payload: searchTerm
+        })
+
+    }
+
     function decreasePage() {
         dispatch({
             type: "SET_PAGE_NUMBER",
             payload: state.pageNumber - 1
-        })  
+        })
     }
 
+    function setOrderBy (value: string) {
+        dispatch({
+            type: "SET_ORDER_BY",
+            payload: value
+        })
+    }
+
+    function toggleFilter(name: string, category: "brand" | "type") {
+        if (category === "brand") {
+            const brands = state.selectedBrands.includes(name)
+                ? state.selectedBrands.filter(brand => brand !== name)
+                : [...state.selectedBrands, name];
+
+            dispatch({
+                type: "SET_SELECTED_BRANDS",
+                payload: brands
+            });
+        }
+
+        if (category === "type") {
+            const types = state.selectedTypes.includes(name)
+                ? state.selectedTypes.filter(type => type !== name)
+                : [...state.selectedTypes, name];
+
+            dispatch({
+                type: "SET_SELECTED_TYPES",
+                payload: types
+            });
+        }
+    }
+
+    async function fetchFilters() {
+
+        try {
+            const response = await fetch("https://localhost:5001/api/products/filters")
+            if (!response.ok) throw response
+            const data: ProductFilters = await response.json()
+            dispatch({
+                type: "SET_BRANDS",
+                payload: data.brands
+            })
+            dispatch({
+                type: "SET_TYPES",
+                payload: data.types
+            })
+        } catch (error) {
+            handleApiError(error, navigate)
+        }
+
+    }
+
+    function clearFilters() {
+        dispatch({
+            type: "SET_SELECTED_BRANDS",
+            payload: []
+        })
+        dispatch({
+            type: "SET_SELECTED_TYPES",
+            payload: []
+        })
+        dispatch({
+            type: "SET_SEARCH_TERM",
+            payload: ""
+        })
+        setOrderBy("name")
+        setProducts();
+        fetchFilters();
+    }
 
     return (
-        <ProductContext.Provider value={{state, dispatch, fetchProducts, increasePage, decreasePage}}>
+        <ProductContext.Provider value={{ state, dispatch, fetchFilters, clearFilters, toggleFilter, setProducts, searchProducts, increasePage, decreasePage, setOrderBy }}>
             {children}
         </ProductContext.Provider >
     )

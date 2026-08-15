@@ -1,10 +1,10 @@
-import IconLink from "./IconLink";
-import ThemeToggle from "../../features/theme/ThemeToggle";
-import Button from "./Button";
+import IconLink from "./IconLink.tsx";
+import ThemeToggle from "../../features/theme/ThemeToggle.tsx";
+import Button from "./Button.tsx";
 import { ShoppingCart } from "lucide-react";
 import { Heart } from "lucide-react";
 import { Link } from "react-router";
-import CountBadge from "./CountBadge";
+import CountBadge from "./CountBadge.tsx";
 import useBasket from "../../hooks/useBasketContext.ts";
 
 type NavBarProps = {
@@ -22,8 +22,8 @@ export default function NavBar({ imageSrc, imageAlt, title }: NavBarProps) {
     );
     
     return (
-        <nav className="fixed w-screen py-2 px-10 flex justify-between items-center bg-zinc-100 dark:bg-zinc-900">
-            <Link to="/" className="flex items-center">
+        <nav className="fixed bottom-0 sm:top-0 sm:bottom-auto w-screen py-2 px-10 flex justify-between items-center bg-zinc-100 dark:bg-zinc-900">
+            <Link to="/" className="sm:flex items-center hidden">
                 <img className="w-20" src={imageSrc} alt={imageAlt} />
                 {title && <h1>{title}</h1>}
 

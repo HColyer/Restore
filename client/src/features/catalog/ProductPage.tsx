@@ -38,7 +38,7 @@ export default function ProductPage() {
     return (
         <main className="min-h-screen flex justify-center items-center pt-20">
             <section className="grid grid-cols-[400px_400px] gap-5 items-start">
-                <img className="aspect-square overflow-hidden rounded-md border-2 border-orange-300 dark:border-purple-400 shadow-sm" src={product.pictureUrl} alt={product.name} />
+                <img className="aspect-square overflow-hidden rounded-md shadow-sm" src={product.pictureUrl} alt={product.name} />
                 <div className="space-y-6">
                     <div className="bg-zinc-100 dark:bg-zinc-900 p-4 rounded-sm space-y-3 shadow-sm">
                         <h1>{product.name}</h1>

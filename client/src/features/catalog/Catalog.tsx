@@ -1,23 +1,32 @@
 import ProductList from "./ProductList"
 import useProduct from "../../hooks/useProductContext"
-import LoadingSpinner from "../../components/ui/LoadingSpinner"
-import ProductFilters from "./ProductFilters" 
+import ProductFilters from "./ProductFilters"
 import Pagination from "../../components/ui/Pagination"
 
 export default function CatalogPage() {
-    const { state, increasePage, decreasePage } = useProduct()
-    const totalPages = Math.ceil(state.totalCount / state.pageSize)
+    const { state, increasePage, decreasePage } = useProduct();
+    const totalPages = Math.ceil(state.totalCount / state.pageSize);
 
-    if (state.loading) return (
-        <div className="min-h-screen flex justify-center pt-40">
-            <LoadingSpinner />
-        </div>
-    )
     return (
-        <>
-            <ProductFilters />
-            <ProductList products={state.products} />
-            <Pagination onPrevious={decreasePage} onNext={increasePage} currentPage={state.pageNumber} totalPages={totalPages} />
-        </>
-    )
+        <main className="grid grid-cols-[450px_1fr] gap-6 pt-24 px-6">
+            <aside className="fixed top-30 w-100">
+                <ProductFilters />
+            </aside>
+
+            <section className="col-start-2 pt-14">
+                <ProductList products={state.products} />
+            </section>
+
+            {totalPages > 1 && (
+                <div className="col-span-2">
+                    <Pagination
+                        onPrevious={decreasePage}
+                        onNext={increasePage}
+                        currentPage={state.pageNumber}
+                        totalPages={totalPages}
+                    />
+                </div>
+            )}
+        </main>
+    );
 }
