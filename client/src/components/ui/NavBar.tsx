@@ -19,7 +19,7 @@ export default function NavBar({ imageSrc, imageAlt, title }: NavBarProps) {
     const totalQuantity = basket?.items.reduce(
         (total, item) => total + item.quantity,
         0
-    );
+    ) ?? 0;
     
     return (
         <nav className="fixed bottom-0 sm:top-0 sm:bottom-auto w-screen py-2 px-10 flex justify-between items-center bg-zinc-100 dark:bg-zinc-900">
