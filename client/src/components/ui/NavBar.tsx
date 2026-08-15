@@ -1,6 +1,5 @@
 import IconLink from "./IconLink.tsx";
 import ThemeToggle from "../../features/theme/ThemeToggle.tsx";
-import Button from "./Button.tsx";
 import { ShoppingBasket, ShoppingCart, House, UsersRound } from "lucide-react";
 
 import { Link } from "react-router";
