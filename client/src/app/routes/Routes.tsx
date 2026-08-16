@@ -3,7 +3,7 @@ import ThemeProvider from "../../store/providers/ThemeProvider";
 import ProductProvider from "../../store/providers/ProductProvider";
 import BasketProvider from "../../store/providers/BasketProvider";
 import App from "../layout/App";
-import Catalog from "../../features/catalog/Catalog";
+import Catalog from "../../features/catalog/Catelog";
 import ProductPage from "../../features/catalog/ProductPage";
 import BasketPage from "../../features/basket/BasketPage";
 import NotFound from "../../errors/NotFound";

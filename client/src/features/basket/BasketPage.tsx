@@ -7,7 +7,7 @@ export default function BasketPage() {
 
     if (!basket || basket.items.length === 0) {
         return (
-            <main className="pt-32 flex justify-center items-center ">
+            <main className="sm:pt-32 flex justify-center items-center px-6">
                 <div className="shadow-md rounded-lg bg-zinc-100 dark:bg-zinc-800 min-w-100 flex flex-col justify-center items-center p-10 space-y-5">
                     <p className="">Your basket is empty</p>
                     <Link to="/" className="btn">
@@ -19,7 +19,7 @@ export default function BasketPage() {
     }
 
     return (
-        <main className="pt-32 flex justify-center items-center">
+        <main className="sm:pt-32 flex justify-center items-center p-6">
             <ul className="space-y-3">
                 {basket.items.map((item) => (
                     <li key={item.productId}>

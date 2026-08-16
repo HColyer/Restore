@@ -15,7 +15,7 @@ export default function Pagination({
 }: Props) {
     return (
         <>
-            <div className="w-80 mx-auto grid grid-cols-3 gap items-center my-12">
+            <div className="w-80 mx-auto grid grid-cols-3 gap items-center">
                 <div>
                     <Button
                         className={currentPage === 1 ? "hidden btn" : "btn"}

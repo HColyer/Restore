@@ -14,7 +14,7 @@ export default function Checkbox({ name, category, checked, onChange }: Props) {
                 className="appearance-none
                 h-5 w-5
                 border border-orange-400
-                rounded-4xl
+                rounded
                 checked:bg-orange-400
                 dark:border-purple-800
                 dark:checked:bg-purple-800

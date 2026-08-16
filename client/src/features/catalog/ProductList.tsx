@@ -17,7 +17,7 @@ export default function ProductList({ products }: Props) {
         )
     }
     return (
-        <ul className="grid grid-cols-3 max-w-fit gap-8">
+        <ul className="max-w-fit mx-auto pb-18 sm:py-10 lg:mx-0 grid grid-cols-1 justify-items-center sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 gap-8">
             {products.map(product => (
                 <li key={product.id}>
                     <ProductItem product={product} />
