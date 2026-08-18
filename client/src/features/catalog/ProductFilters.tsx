@@ -1,5 +1,5 @@
 import Button from "../../components/ui/Button"
-import Fieldset from "../../components/Fieldset"
+import Fieldset from "../../components/ui/Fieldset"
 import Checkbox from "../../components/ui/Checkbox"
 import SortSelect from "../../components/ui/SortSelect"
 import { Search, ChevronRight } from "lucide-react"

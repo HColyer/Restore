@@ -1,18 +1,17 @@
 import IconLink from "./IconLink.tsx";
 import ThemeToggle from "../../features/theme/ThemeToggle.tsx";
 import { ShoppingBasket, ShoppingCart, House, UsersRound } from "lucide-react";
-
 import { Link } from "react-router";
 import CountBadge from "./CountBadge.tsx";
 import useBasket from "../../hooks/useBasketContext.ts";
 
-type NavBarProps = {
+type Props = {
     imageSrc: string,
     imageAlt: string,
     title?: string
 }
 
-export default function NavBar({ imageSrc, imageAlt, title }: NavBarProps) {
+export default function NavBar({ imageSrc, imageAlt, title }: Props) {
     const { basket } = useBasket();
 
     const totalQuantity = basket?.items.reduce(
@@ -40,7 +39,7 @@ export default function NavBar({ imageSrc, imageAlt, title }: NavBarProps) {
                         <IconLink className="sm:hidden" href="/" icon={<House />} />
                     </li>
                     <li>
-                        <IconLink className="sm:hidden" href="/" icon={<UsersRound />}/>
+                        <IconLink className="sm:hidden" href="/account" icon={<UsersRound />}/>
                     </li>
                     <li className="flex items-center">
                         <ThemeToggle />
@@ -51,7 +50,7 @@ export default function NavBar({ imageSrc, imageAlt, title }: NavBarProps) {
                 </ul>
                 <div className="flex items-center justify-center gap-4">
                     {/* {<ThemeToggle />} */}
-                    <Link to="#" className="hidden sm:block btn">
+                    <Link to="/account" className="hidden sm:block btn">
                         Login
                     </Link>
                 </div>

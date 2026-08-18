@@ -6,9 +6,10 @@ import App from "../layout/App";
 import Catalog from "../../features/catalog/Catelog";
 import ProductPage from "../../features/catalog/ProductPage";
 import BasketPage from "../../features/basket/BasketPage";
-import NotFound from "../../errors/NotFound";
-import ServerError from "../../errors/ServerError";
-import BadRequest from "../../errors/BadRequest";
+import AccountPage from "../../features/account/AccountPage";
+import NotFound from "../../pages/NotFound";
+import ServerError from "../../pages/ServerError";
+import BadRequest from "../../pages/BadRequest";
 
 
 export const router = createBrowserRouter([
@@ -35,6 +36,10 @@ export const router = createBrowserRouter([
             {
                 path: "/basket",
                 element: <BasketPage />
+            },
+            {
+                path: "/account",
+                element: <AccountPage  />
             },
             {
                 path: "*",

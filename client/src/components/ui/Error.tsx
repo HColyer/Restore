@@ -2,7 +2,7 @@ type Props = {
     title: string
     message: string
 }
-export default function ErrorContainer({title, message}: Props) {
+export default function Error({title, message}: Props) {
     return (
         <main className="flex justify-center pt-40">
             <section className="bg-zinc-100 dark:bg-zinc-900 p-10 shadow-sm rounded-sm">

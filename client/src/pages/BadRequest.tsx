@@ -1,8 +1,8 @@
-import ErrorContainer from "../components/ui/ErrorContainer"
+import Error from "../components/ui/Error"
 
 export default function BadRequest() {
     return (
-        <ErrorContainer
+        <Error
             title="400 - Bad Request"
             message="The request couldn't be processed because it was invalid."
         />
