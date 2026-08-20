@@ -9,7 +9,7 @@ export default function Input({ id, label, ...props }: InputProps) {
     return (
         <>
             <label htmlFor={id}>{label}</label>
-            <input className="bg-zinc-200 dark:bg-zinc-800 p-2 focus:outline-1 focus:outline-orange-300 dark:focus:outline-purple-800" {...props} id={id} type="text" />
+            <input className="bg-zinc-200 dark:bg-zinc-700 p-2 focus:bg-zinc-300 dark:focus:bg-zinc-800 outline-0" {...props} id={id} />
         </>
     )
 }

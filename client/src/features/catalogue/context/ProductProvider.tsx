@@ -1,11 +1,10 @@
-import { productReducer } from "../reducers/ProductReducer";
+import { productReducer } from "./ProductReducer";
 import { createContext, useEffect, useReducer, type Dispatch, type ReactNode } from "react";
-import type { Product } from "../../app/models/Product";
-import type { ProductAction } from "../reducers/ProductReducer";
-import type { Pagination } from "../../app/models/Pagination";
-import handleApiError from "../../api/handleApiError";
+import { getProducts, getProductFilters } from "../api/productApi";
+import type { Product } from "../../../app/models/Product";
+import type { ProductAction } from "./ProductReducer";
+import handleApiError from "../../../api/handleApiError";
 import { useNavigate } from "react-router";
-
 
 export type ProductState = {
     products: Product[];
@@ -19,11 +18,6 @@ export type ProductState = {
     types: string[];
     selectedBrands: string[];
     selectedTypes: string[];
-}
-
-type ProductFilters = {
-    brands: string[],
-    types: string[]
 }
 
 type ProductContextValue = {
@@ -88,35 +82,19 @@ export default function ProductProvider({ children }: Props) {
 
     async function setProducts() {
         const { pageNumber, pageSize, searchTerm, selectedBrands, selectedTypes, orderBy } = state
-        const params = new URLSearchParams();
 
-        params.set("pageNumber", pageNumber.toString());
-        params.set("pageSize", pageSize.toString());
-
-        if (searchTerm) {
-            params.set("searchTerm", searchTerm);
-        }
-
-        if(orderBy) {
-            params.set("orderBy", orderBy)
-        }
-
-        selectedBrands.forEach(brand => {
-            params.append("brands", brand);
-        });
-
-        selectedTypes.forEach(type => {
-            params.append("types", type);
-        });
         dispatch({ type: "SET_LOADING", payload: true });
         try {
-            const response = await fetch(
-                `https://localhost:5001/api/products?${params.toString()}`);
-            // api handler needs a response object to check the status code, 
-            // so we throw the response if it's not ok
-            if (!response.ok) throw response;
-            const data: Pagination<Product> = await response.json();
-            dispatch({ type: "SET_PRODUCTS", payload: data });
+            const products = await getProducts({
+                pageNumber: pageNumber,
+                pageSize: pageSize,
+                searchTerm: searchTerm,
+                selectedBrands: selectedBrands,
+                selectedTypes: selectedTypes,
+                orderBy: orderBy,
+
+            })
+            dispatch({ type: "SET_PRODUCTS", payload: products });
         } catch (error) {
             handleApiError(error, navigate);
         } finally {
@@ -173,16 +151,14 @@ export default function ProductProvider({ children }: Props) {
     async function fetchFilters() {
 
         try {
-            const response = await fetch("https://localhost:5001/api/products/filters")
-            if (!response.ok) throw response
-            const data: ProductFilters = await response.json()
+            const filters = await getProductFilters();        
             dispatch({
                 type: "SET_BRANDS",
-                payload: data.brands
+                payload: filters.brands
             })
             dispatch({
                 type: "SET_TYPES",
-                payload: data.types
+                payload: filters.types
             })
         } catch (error) {
             handleApiError(error, navigate)

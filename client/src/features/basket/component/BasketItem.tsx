@@ -1,6 +1,6 @@
 import { Minus, Plus, Trash } from "lucide-react"
-import useBasket from "../../hooks/useBasketContext"
-import type { BasketItem } from "../../app/models/BasketItem"
+import useBasket from "../hook/useBasket"
+import type { BasketItem } from "../../../app/models/BasketItem"
 
 type Props = {
     item: BasketItem

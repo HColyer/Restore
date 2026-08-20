@@ -1,10 +1,12 @@
 import type { ComponentPropsWithoutRef } from "react";
 
-type ButtonProps = ComponentPropsWithoutRef<"button">
+type ButtonProps = {
+    className?: string
+} & ComponentPropsWithoutRef<"button">
 
-export default function Button({ children, ...props }: ButtonProps) {
+export default function Button({ className, children, ...props }: ButtonProps) {
     return (
-        <button className="btn" {...props}>
+        <button className={`btn ${className}`} {...props}>
             {children}
         </button>
     )

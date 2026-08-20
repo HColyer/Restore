@@ -1,9 +1,9 @@
-import Button from "../../components/ui/Button"
-import Fieldset from "../../components/ui/Fieldset"
-import Checkbox from "../../components/ui/Checkbox"
-import SortSelect from "../../components/ui/SortSelect"
+import Button from "../../../components/ui/Button"
+import Fieldset from "../../../components/ui/Fieldset"
+import Checkbox from "../../../components/ui/Checkbox"
+import SortSelect from "./SortSelect"
 import { Search, ChevronRight } from "lucide-react"
-import useProduct from "../../hooks/useProductContext"
+import useProduct from "../hooks/useProduct"
 import { useEffect, useState, useRef } from "react";
 
 

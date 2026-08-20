@@ -1,11 +1,12 @@
 import { createBrowserRouter } from "react-router";
-import ThemeProvider from "../../store/providers/ThemeProvider";
-import ProductProvider from "../../store/providers/ProductProvider";
-import BasketProvider from "../../store/providers/BasketProvider";
+import AuthProvider from "../../features/auth/context/AuthProvider";
+import ThemeProvider from "../../features/theme/context/ThemeProvider";
+import ProductProvider from "../../features/catalogue/context/ProductProvider";
+import BasketProvider from "../../features/basket/context/BasketProvider";
 import App from "../layout/App";
-import Catalog from "../../features/catalog/Catelog";
-import ProductPage from "../../features/catalog/ProductPage";
-import BasketPage from "../../features/basket/BasketPage";
+import Catalog from "../../features/catalogue/pages/CatalogPage";
+import ProductPage from "../../features/catalogue/pages/ProductPage";
+import BasketPage from "../../features/basket/page/BasketPage";
 import AccountPage from "../../features/account/AccountPage";
 import NotFound from "../../pages/NotFound";
 import ServerError from "../../pages/ServerError";
@@ -16,13 +17,15 @@ export const router = createBrowserRouter([
     {
         path: "/",
         element: (
-            <ThemeProvider>
-                <ProductProvider>
-                    <BasketProvider>
-                        <App />
-                    </BasketProvider>
-                </ProductProvider>
-            </ThemeProvider>
+            <AuthProvider>
+                <ThemeProvider>
+                    <ProductProvider>
+                        <BasketProvider>
+                            <App />
+                        </BasketProvider>
+                    </ProductProvider>
+                </ThemeProvider>
+            </AuthProvider>
         ),
         children: [
             {
@@ -39,7 +42,7 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/account",
-                element: <AccountPage  />
+                element: <AccountPage />
             },
             {
                 path: "*",

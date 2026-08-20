@@ -1,6 +1,6 @@
-import { type ProductState } from "../providers/ProductProvider";
-import type { Product } from "../../app/models/Product";
-import type { Pagination } from "../../app/models/Pagination";
+import { type ProductState } from "./ProductProvider";
+import type { Product } from "../../../app/models/Product";
+import type { Pagination } from "../../../app/models/Pagination";
 
 export type ProductAction =
   | { type: "SET_PRODUCTS"; payload: Pagination<Product> }

@@ -1,8 +1,8 @@
 import { Link } from "react-router";
-import type { Product } from "../../app/models/Product";
-import Button from "../../components/ui/Button";
+import { type Product } from "../../../app/models/Product";
+import Button from "../../../components/ui/Button";
 import { Plus } from "lucide-react";
-import useBasket from "../../hooks/useBasketContext";
+import useBasket from "../../basket/hook/useBasket";
 
 type Props = {
     product: Product

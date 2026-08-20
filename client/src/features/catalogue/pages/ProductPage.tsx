@@ -1,12 +1,12 @@
-import type { Product } from "../../app/models/Product"
+import type { Product } from "../../../app/models/Product"
 import { useEffect, useState } from "react"
 import { useParams, useNavigate } from "react-router"
-import useBasket from "../../hooks/useBasketContext"
-import Button from "../../components/ui/Button"
-import LoadingSpinner from "../../components/ui/LoadingSpinner"
-import { getProduct } from "../../services/CatalogServices"
+import useBasket from "../../basket/hook/useBasket"
+import Button from "../../../components/ui/Button"
+import LoadingSpinner from "../../../components/ui/LoadingSpinner"
+import { getProduct } from "../api/productApi"
 import { Plus } from "lucide-react"
-import handleApiError from "../../api/handleApiError"
+import handleApiError from "../../../api/handleApiError"
 
 export default function ProductPage() {
     const { id } = useParams();
@@ -17,6 +17,9 @@ export default function ProductPage() {
     useEffect(() => {
         async function loadProduct() {
             try {
+                if (!id) {
+                    return handleApiError(404, navigate)
+                }
                 const data = await getProduct(id);
                 setProduct(data);
             } catch (error) {

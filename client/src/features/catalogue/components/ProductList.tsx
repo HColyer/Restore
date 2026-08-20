@@ -1,6 +1,6 @@
-import type { Product } from "../../app/models/Product"
-import LoadingSpinner from "../../components/ui/LoadingSpinner"
-import useProduct from "../../hooks/useProductContext"
+import type { Product } from "../../../app/models/Product"
+import LoadingSpinner from "../../../components/ui/LoadingSpinner"
+import useProduct from "../hooks/useProduct"
 import ProductItem from "./ProductItem"
 
 type Props = {

@@ -1,5 +1,5 @@
-import useBasket from "../../hooks/useBasketContext";
-import BasketItem from "./BasketItem";
+import useBasket from "../hook/useBasket";
+import BasketItem from "../component/BasketItem";
 import { Link } from "react-router";
 
 export default function BasketPage() {

@@ -1,5 +1,5 @@
-import type { BasketState } from "../providers/BasketProvider"
-import type { Basket } from "../../app/models/Basket"
+import type { BasketState } from "./BasketProvider"
+import type { Basket } from "../../../app/models/Basket"
 
 type SetBasketAction ={
     type: "SET_BASKET",

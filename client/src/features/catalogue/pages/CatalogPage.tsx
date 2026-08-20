@@ -1,9 +1,9 @@
-import ProductList from "./ProductList"
-import useProduct from "../../hooks/useProductContext"
-import ProductFilters from "./ProductFilters"
-import Pagination from "../../components/ui/Pagination"
+import ProductList from "../components/ProductList"
+import useProduct from "../hooks/useProduct";
+import ProductFilters from "../components/ProductFilters"
+import Pagination from "../components/Pagination"
 
-export default function CatelogPage() {
+export default function CataloguePage() {
     const { state, increasePage, decreasePage } = useProduct();
     const totalPages = Math.ceil(state.totalCount / state.pageSize);
 

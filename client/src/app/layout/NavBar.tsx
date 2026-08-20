@@ -1,9 +1,9 @@
-import IconLink from "./IconLink.tsx";
-import ThemeToggle from "../../features/theme/ThemeToggle.tsx";
+import IconLink from "../../components/ui/IconLink.tsx";
+import ThemeToggle from "../../features/theme/component/ThemeToggle.tsx";
 import { ShoppingBasket, ShoppingCart, House, UsersRound } from "lucide-react";
 import { Link } from "react-router";
-import CountBadge from "./CountBadge.tsx";
-import useBasket from "../../hooks/useBasketContext.ts";
+import CountBadge from "../../components/ui/CountBadge.tsx";
+import useBasket from "../../features/basket/hook/useBasket.ts";
 
 type Props = {
     imageSrc: string,

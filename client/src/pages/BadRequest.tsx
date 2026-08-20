@@ -1,4 +1,4 @@
-import Error from "../components/ui/Error"
+import Error from "../components/feedback/Error"
 
 export default function BadRequest() {
     return (

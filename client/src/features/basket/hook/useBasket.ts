@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { BasketContext } from "../store/providers/BasketProvider";
+import { BasketContext } from "../context/BasketProvider";
 
 export default function useBasket() {
     const context = useContext(BasketContext);
